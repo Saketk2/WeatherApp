@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to left, #87CEEB, #ffffff);
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #000000;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #87CEEB; 
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .weather-info {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .weather-info p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Weather App</h1>
+
+    <%= form_with(url: root_path, method: "get") do %>
+      <%= text_field_tag :username, params[:username], placeholder: "Enter your username" %><br>
+      <%= text_field_tag :city, params[:city], placeholder: "Enter city name" %><br>
+      <%= submit_tag "Get Weather" %>
+    <% end %>
+
+    <div class="weather-info">
+      <% if @username.present? %>
+        <p><%= @greeting %></p>
+      <% end %>
+
+      <% if @weather['main'] %>
+        <p>Current Weather in <%= @city %> </p>
+        <p>Temperature: <%= (@weather['main']['temp'] - 273.15).round(1) %>°C</p>
+        <p>Wind Speed: <%= (@weather['wind']['speed'] * 3.6).round(1) %> km/h </p>
+        <p>Humidity: <%= @weather['main']['humidity'] %> </p>
+      <% else %>
+        <p><code>Please make sure you enter a real place!</code></p>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>
